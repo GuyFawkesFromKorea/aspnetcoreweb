@@ -12,4 +12,9 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
   </ItemGroup>
 
+  <Target Name="CreateLogsFolder" AfterTargets="AfterPublish">
+    <MakeDir Directories="$(PublishDir)logs" Condition="!Exists('$(PublishDir)logs')" />
+    <MakeDir Directories="$(PublishUrl)logs" Condition="!Exists('$(PublishUrl)logs')" />
+  </Target>
+
 </Project>
