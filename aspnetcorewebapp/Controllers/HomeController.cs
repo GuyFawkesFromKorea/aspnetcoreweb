@@ -33,5 +33,19 @@ namespace aspnetcorewebapp.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        const string SessionKeyDate = "DtNow";
+        public IActionResult SetDate() {
+            HttpContext.Session.Set<DateTime>(SessionKeyDate, DateTime.Now);
+            return RedirectToAction("GetDate");
+        }
+
+        public IActionResult GetDate() {
+            var date = HttpContext.Session.Get<DateTime>(SessionKeyDate);
+            var sessionTime = date.TimeOfDay.ToString();
+            var currentTime = DateTime.Now.TimeOfDay.ToString();
+
+            return Content($"Current time:{currentTime} - Session time:{sessionTime}");
+        }
     }
 }
