@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using aspnetcorewebapp.Models;
+using JWLibraryNetCore;
 
 namespace aspnetcorewebapp.Controllers
 {
@@ -12,6 +13,8 @@ namespace aspnetcorewebapp.Controllers
     {
         public IActionResult Index()
         {
+            var dateNow = DateTime.Now.ToString(DateHelper.DateFormatType.YYYY_D_MM_D_DD);
+            ViewBag.DateNow = dateNow;
             return View();
         }
 
