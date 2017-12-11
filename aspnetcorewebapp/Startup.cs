@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -24,14 +25,28 @@ namespace aspnetcorewebapp
             services.AddMvc();
 
             //add a default in-memory implementation of IDistributeCache.
-            services.AddDistributedMemoryCache();
+            //서버 분산 메모리 캐쉬 사용
+            //services.AddDistributedMemoryCache();
 
-            services.AddSession(options => {
+            //redis 분산 메모리 캐쉬 사용
+            services.AddDistributedRedisCache(options =>
+            {
+                options.Configuration = "localhost:6379";
+                options.InstanceName = "";
+            });
+
+            //세션 설정
+            services.AddSession(options =>
+            {
                 //set a short timeout for easy testing
                 options.IdleTimeout = TimeSpan.FromSeconds(10);
                 options.Cookie.HttpOnly = true;
 
             });
+
+            // Add CookieTempDataProvider after AddMvc and include ViewFeatures.
+            // using Microsoft.AspNetCore.Mvc.ViewFeatures;
+            services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,6 +62,7 @@ namespace aspnetcorewebapp
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            //세션 사용
             app.UseSession();
             app.UseStaticFiles();
 
@@ -54,7 +70,7 @@ namespace aspnetcorewebapp
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Login}/{id?}");
             });
         }
     }

@@ -11,10 +11,19 @@ namespace aspnetcorewebapp.Controllers
 {
     public class HomeController : Controller
     {
+        const string SessionKeyName = "_Name";
+        const string SessionKeyYearsMember = "_YearsMember";
+        const string SessionKeyDate = "_Date";
+
         public IActionResult Index()
         {
             var dateNow = DateTime.Now.ToString(DateHelper.DateFormatType.YYYY_D_MM_D_DD);
             ViewBag.DateNow = dateNow;
+
+            // Requires using Microsoft.AspNetCore.Http;
+            HttpContext.Session.Set<string>(SessionKeyName, "Rick");
+            HttpContext.Session.Set<Int32>(SessionKeyYearsMember, 3);
+
             return View();
         }
 
@@ -37,7 +46,7 @@ namespace aspnetcorewebapp.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        const string SessionKeyDate = "DtNow";
+        #region memory session test
         public IActionResult SetDate() {
             HttpContext.Session.Set<DateTime>(SessionKeyDate, DateTime.Now);
             return RedirectToAction("GetDate");
@@ -50,5 +59,16 @@ namespace aspnetcorewebapp.Controllers
 
             return Content($"Current time:{currentTime} - Session time:{sessionTime}");
         }
+        #endregion
+
+        #region redis session test
+        public IActionResult SessionNameYears()
+        {
+            var name = HttpContext.Session.Get<string>(SessionKeyName);
+            var yearsMember = HttpContext.Session.Get<Int32>(SessionKeyYearsMember);
+
+            return Content($"Name: \"{name}\",  Membership years: \"{yearsMember}\"");
+        }
+        #endregion
     }
 }
