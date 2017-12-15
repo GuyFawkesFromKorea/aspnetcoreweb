@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,7 +23,18 @@ namespace aspnetcorewebapp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc(options => 
+                {
+                    options.ReturnHttpNotAcceptable = true;
+                    options.OutputFormatters.RemoveType<HttpNoContentOutputFormatter>();
+                    options.InputFormatters.Add(new XmlSerializerInputFormatter());
+                    options.OutputFormatters.Add(new XmlSerializerOutputFormatter());
+                    options.FormatterMappings.SetMediaTypeMappingForFormat("xml", "application/xml");
+                })
+                .AddJsonOptions(options => 
+                {
+                    options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+                });
 
             //add a default in-memory implementation of IDistributeCache.
             //서버 분산 메모리 캐쉬 사용
@@ -44,9 +56,17 @@ namespace aspnetcorewebapp
 
             });
 
+            services.AddCors(options => {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });            
+
             // Add CookieTempDataProvider after AddMvc and include ViewFeatures.
             // using Microsoft.AspNetCore.Mvc.ViewFeatures;
-            services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
+            //services.AddSingleton<ITempDataProvider, CookieTempDataProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,6 +82,8 @@ namespace aspnetcorewebapp
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            app.UseCors("CorsPolicy");
+
             //세션 사용
             app.UseSession();
             app.UseStaticFiles();
@@ -70,7 +92,7 @@ namespace aspnetcorewebapp
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Login}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

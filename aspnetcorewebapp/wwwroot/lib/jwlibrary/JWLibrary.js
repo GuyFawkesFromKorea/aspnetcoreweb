@@ -20,20 +20,20 @@ JWLibrary.TokenProxy = function (controller, action, param, isProgress) {
 
     if(isProgress) {}
 
-    this.WebMethod = function (type, json, token, successFn, errorFn) {
+    this.WebMethod = function (type, json, token, successFn) {
         $.ajax({
             type: type,
             url: url,
-            contentType: "application/json; charset=UTF-8",
+            //contentType: "application/json; charset=utf-8",
             data: json,
-            dataType: "json",
+            //dataType: "json",
             headers : {
-                "RequestVerificationToken": token
+                //"RequestVerificationToken": token
+                "Content-Type": 'application/json',
+                "Accept":'application/json'
             },
             async: true,
-            success: function (data, textStatus, xhr) {
-                if(isProgress)
-                    fnProgressClose();
+            success: function (data, textStatus, xhr) {              
 
                 if (data.ResCd == "00") {
                     successFn(data);
@@ -62,9 +62,7 @@ JWLibrary.TokenProxy = function (controller, action, param, isProgress) {
                 }
             },
             error: function (xhr, textStatus) {
-                if(isProgress)
-                    fnProgressClose();
-
+               
                 if (xhr.status == 0) {
                     return;
                 }
@@ -76,7 +74,7 @@ JWLibrary.TokenProxy = function (controller, action, param, isProgress) {
     return this;
 }
 
-JWLibrary.Proxy = function (controller, action, param, isProgress) {
+JWLibrary.Proxy = function (controller, action, param) {
     var loc = parent.location.href;
 
     var _I = this;
@@ -86,22 +84,17 @@ JWLibrary.Proxy = function (controller, action, param, isProgress) {
     var _I = this;
 
     var url = protocol + "://" + host + "/" + controller + "/" + action + "?" + param;
-
-    if(isProgress){}
-        
+    
 
     this.WebMethod = function (type, json, successFn, errorFn) {
         $.ajax({
             type: type,
             url: url,
-            contentType: false,
-            processData: false,
             data: json,
-            dataType: "json",
-            async: true,
+            contentType: "application/json; charset=utf-8",
+            datatype: "json",
             success: function (data, textStatus, xhr) {
-                if(isProgress)
-                    fnProgressClose();
+         
 
                 if (data.ResCd == "00") {
                     successFn(data);
@@ -123,8 +116,7 @@ JWLibrary.Proxy = function (controller, action, param, isProgress) {
                 }
             },
             error: function (xhr, textStatus) {
-                if(isProgress)
-                    fnProgressClose();
+         
 
                 if (xhr.status == 0) return;
             }

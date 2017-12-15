@@ -15,24 +15,39 @@ namespace aspnetcorewebapp.Controllers
         public IActionResult Login(string returnUrl = "")
         {
             TempData["returnUrl"] = returnUrl;
-            return View();
+            return View(new LoginModel());
         }
 
-        [AllowAnonymous]
         [HttpPost]
-        public ReturnObj Login(string id = "", string pw = "", string returnUrl = "")
+        public IActionResult Login(LoginModel model)
         {
             ReturnObj rtnObj = new ReturnObj();
 
-            if (id == "h20913" && pw == "1234")
+            if (model.Id == "h20913" && model.Pw == "wcw123")
             {
-                return rtnObj;
+                return Json(rtnObj);
             }
 
             rtnObj.RtnCd = "-1";
             rtnObj.RtnMsg = "아이디/암호를 다시 확인하세요.";
 
-            return rtnObj;
+            return View();
+        }
+
+        [HttpPost]        
+        public IActionResult LoginFromBody([FromBody]LoginModel /*dynamic*/ model)
+        {
+            ReturnObj rtnObj = new ReturnObj();
+
+            if (model.Id == "h20913" && model.  Pw == "wcw123")
+            {
+                return Json(rtnObj);
+            }
+
+            rtnObj.RtnCd = "-1";
+            rtnObj.RtnMsg = "아이디/암호를 다시 확인하세요.";
+
+            return Json(rtnObj);
         }
     }
 }
