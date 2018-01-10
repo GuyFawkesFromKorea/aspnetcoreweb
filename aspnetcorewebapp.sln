@@ -13,9 +13,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JWLibraryNetCore", "Library
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedisTest", "RedisTest\RedisTest.csproj", "{1D9C2188-E225-4F81-A79F-2BAADCC90938}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "aspnetcorewebcookieauth", "aspnetcorewebcookieauth\aspnetcorewebcookieauth.csproj", "{91711E25-2B40-43B7-A3E5-9F44B81C55A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "aspnetcorewebcookieauth", "aspnetcorewebcookieauth\aspnetcorewebcookieauth.csproj", "{91711E25-2B40-43B7-A3E5-9F44B81C55A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "aspnetcorewebidentityauth", "aspnetcorewebidentityauth\aspnetcorewebidentityauth.csproj", "{B7420FB5-5A1F-4041-AC99-52F827AD2147}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "aspnetcorewebidentityauth", "aspnetcorewebidentityauth\aspnetcorewebidentityauth.csproj", "{B7420FB5-5A1F-4041-AC99-52F827AD2147}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JWDB.EntityLayer", "JWDB.EntityLayer\JWDB.EntityLayer.csproj", "{BAA9703D-6B6C-4DEB-B436-F522B56D75A4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JWDB.DataLayer", "JWDB.DataLayer\JWDB.DataLayer.csproj", "{3913B0E6-45E0-4603-B7DD-52CDB64F1378}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JWDb.BusinessLayer", "JWDb.BusinessLayer\JWDb.BusinessLayer.csproj", "{62D8AD98-9D99-47D1-9448-26B256303D6C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +53,18 @@ Global
 		{B7420FB5-5A1F-4041-AC99-52F827AD2147}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7420FB5-5A1F-4041-AC99-52F827AD2147}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7420FB5-5A1F-4041-AC99-52F827AD2147}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAA9703D-6B6C-4DEB-B436-F522B56D75A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAA9703D-6B6C-4DEB-B436-F522B56D75A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAA9703D-6B6C-4DEB-B436-F522B56D75A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAA9703D-6B6C-4DEB-B436-F522B56D75A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3913B0E6-45E0-4603-B7DD-52CDB64F1378}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3913B0E6-45E0-4603-B7DD-52CDB64F1378}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3913B0E6-45E0-4603-B7DD-52CDB64F1378}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3913B0E6-45E0-4603-B7DD-52CDB64F1378}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62D8AD98-9D99-47D1-9448-26B256303D6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62D8AD98-9D99-47D1-9448-26B256303D6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62D8AD98-9D99-47D1-9448-26B256303D6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62D8AD98-9D99-47D1-9448-26B256303D6C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
